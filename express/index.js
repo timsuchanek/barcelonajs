@@ -10,22 +10,9 @@ const prisma = new PrismaClient({
   errorFormat: 'pretty',
 })
 
-app.get('/users', async (req, res) => {
-  console.log(req.query)
-  res.json(
-    await prisma.user.findMany({
-      take: Number(req.query.take),
-    }),
-  )
-})
+app.get('/users', async (req, res) => {})
 
-app.post('/users', async (req, res) => {
-  res.json(
-    await prisma.user.create({
-      data: req.body,
-    }),
-  )
-})
+app.post('/users', async (req, res) => {})
 
 const { PORT = 4000 } = process.env
 
