@@ -12,10 +12,6 @@ export default function Users({
         <br />
         Email: {user.email}
         <br />
-        Posts:{' '}
-        {user.posts?.map((p) => (
-          <div>{p.title}</div>
-        ))}
       </pre>
     </div>
   )
@@ -39,7 +35,6 @@ export async function getStaticProps({ params }) {
     where: {
       id: Number(params.id),
     },
-    include: { posts: true },
   })
   return {
     props: {
