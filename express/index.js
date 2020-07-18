@@ -1,14 +1,9 @@
 const express = require('express')
 require('express-async-errors')
-const { PrismaClient } = require('@prisma/client')
 
 const app = express()
 
 app.use(express.json())
-
-const prisma = new PrismaClient({
-  errorFormat: 'pretty',
-})
 
 app.get('/users', async (req, res) => {})
 
