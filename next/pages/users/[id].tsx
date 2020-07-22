@@ -2,6 +2,8 @@ import React from 'react'
 import { PrismaClient } from '@prisma/client'
 import { InferGetStaticPropsType } from 'next'
 
+const prisma = new PrismaClient()
+
 export default function Users({
   user,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
@@ -12,13 +14,18 @@ export default function Users({
         <br />
         Email: {user.email}
         <br />
+        Posts:{' '}
+        {user.posts?.map((p) => (
+          <div>{p.title}</div>
+        ))}
       </pre>
     </div>
   )
 }
 
+export async function getServersideProps() {}
+
 export async function getStaticPaths() {
-  const prisma = new PrismaClient()
   const ids = await prisma.user.findMany({
     select: { id: true },
   })
@@ -30,10 +37,16 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-  const prisma = new PrismaClient()
   const user = await prisma.user.findOne({
     where: {
       id: Number(params.id),
+    },
+    include: {
+      posts: {
+        include: {
+          comments: true,
+        },
+      },
     },
   })
   return {
