@@ -1,6 +1,6 @@
-datasource ds {
+datasource db {
   provider = "sqlite"
-  url = "***"
+  url      = "file:dev.db"
 }
 
 generator client {
@@ -10,7 +10,7 @@ generator client {
 model User {
   id    Int    @id @default(autoincrement())
   name  String
-  email String
+  email String @unique
   posts Post[]
 }
 
@@ -18,14 +18,15 @@ model Post {
   id       Int       @id @default(autoincrement())
   title    String
   content  String
-  user     User?     @relation(fields: [userId], references: [id])
-  userId   Int?
+  user     User      @relation(fields: [userId], references: [id])
+  userId   Int
   comments Comment[]
 }
 
 model Comment {
-  id     Int    @id @default(autoincrement())
-  text   String
-  post   Post?  @relation(fields: [postId], references: [id])
-  postId Int?
+  id     Int     @id @default(autoincrement())
+  title  String
+  text   String?
+  post   Post    @relation(fields: [postId], references: [id])
+  postId Int
 }

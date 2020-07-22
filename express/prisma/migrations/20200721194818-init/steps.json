@@ -3,13 +3,13 @@
   "steps": [
     {
       "tag": "CreateSource",
-      "source": "ds"
+      "source": "db"
     },
     {
       "tag": "CreateArgument",
       "location": {
         "tag": "Source",
-        "source": "ds"
+        "source": "db"
       },
       "argument": "provider",
       "value": "\"sqlite\""
@@ -18,7 +18,7 @@
       "tag": "CreateArgument",
       "location": {
         "tag": "Source",
-        "source": "ds"
+        "source": "db"
       },
       "argument": "url",
       "value": "\"***\""
@@ -83,6 +83,17 @@
       "field": "email",
       "type": "String",
       "arity": "Required"
+    },
+    {
+      "tag": "CreateDirective",
+      "location": {
+        "path": {
+          "tag": "Field",
+          "model": "User",
+          "field": "email"
+        },
+        "directive": "unique"
+      }
     },
     {
       "tag": "CreateField",
@@ -157,7 +168,7 @@
       "model": "Post",
       "field": "user",
       "type": "User",
-      "arity": "Optional"
+      "arity": "Required"
     },
     {
       "tag": "CreateDirective",
@@ -203,7 +214,7 @@
       "model": "Post",
       "field": "userId",
       "type": "Int",
-      "arity": "Optional"
+      "arity": "Required"
     },
     {
       "tag": "CreateField",
@@ -262,16 +273,23 @@
     {
       "tag": "CreateField",
       "model": "Comment",
-      "field": "text",
+      "field": "title",
       "type": "String",
       "arity": "Required"
     },
     {
       "tag": "CreateField",
       "model": "Comment",
+      "field": "text",
+      "type": "String",
+      "arity": "Optional"
+    },
+    {
+      "tag": "CreateField",
+      "model": "Comment",
       "field": "post",
       "type": "Post",
-      "arity": "Optional"
+      "arity": "Required"
     },
     {
       "tag": "CreateDirective",
@@ -317,7 +335,7 @@
       "model": "Comment",
       "field": "postId",
       "type": "Int",
-      "arity": "Optional"
+      "arity": "Required"
     }
   ]
 }
